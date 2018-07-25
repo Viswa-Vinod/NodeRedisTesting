@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { FETCH_USER, FETCH_SURVEYS } from './types';
+import { FETCH_USER, FETCH_BLOGS, FETCH_BLOG } from './types';
 
 export const fetchUser = () => async dispatch => {
   const res = await axios.get('/api/current_user');
@@ -13,15 +13,21 @@ export const handleToken = token => async dispatch => {
   dispatch({ type: FETCH_USER, payload: res.data });
 };
 
-export const submitSurvey = (values, history) => async dispatch => {
-  const res = await axios.post('/api/surveys', values);
+export const submitBlog = (values, history) => async dispatch => {
+  const res = await axios.post('/api/blogs', values);
 
-  history.push('/surveys');
-  dispatch({ type: FETCH_USER, payload: res.data });
+  history.push('/blogs');
+  dispatch({ type: FETCH_BLOG, payload: res.data });
 };
 
-export const fetchSurveys = () => async dispatch => {
-  const res = await axios.get('/api/surveys');
+export const fetchBlogs = () => async dispatch => {
+  const res = await axios.get('/api/blogs');
 
-  dispatch({ type: FETCH_SURVEYS, payload: res.data });
+  dispatch({ type: FETCH_BLOGS, payload: res.data });
+};
+
+export const fetchBlog = id => async dispatch => {
+  const res = await axios.get(`/api/blogs/${id}`);
+
+  dispatch({ type: FETCH_BLOG, payload: res.data });
 };
